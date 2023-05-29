@@ -1,0 +1,40 @@
+A1
+
+1705001 - 1705006 : Presentation 4
+1705007 - 1705012 : Presentation 5
+1705013 - 1705018 : Presentation 2
+1705019 - 1705024 : Presentation 3
+1705025 - 1705030 : Presentation 1
+
+A2
+
+1705031 - 1705036 : Presentation 1
+1705037 - 1705042 : Presentation 2
+1705043 - 1705048 : Presentation 5
+1705049 - 1705054 : Presentation 4
+1705055 - 1705060 : Presentation 3
+
+B1
+
+1705061 - 1705066 : Presentation 4
+1705067 - 1705072 : Presentation 3
+1705073 - 1705078 : Presentation 2
+1705079 - 1705084 : Presentation 5
+1705085 - 1705090 : Presentation 1
+
+B2
+
+1705091 - 1705096 : Presentation 3
+1705097 - 1705102 : Presentation 2
+1705103 - 1705109 : Presentation 4
+1705110 - 1705115 : Presentation 5
+1705116 - 1705121 : Presentation 1
+
+
+
+
+
+
+
+
+

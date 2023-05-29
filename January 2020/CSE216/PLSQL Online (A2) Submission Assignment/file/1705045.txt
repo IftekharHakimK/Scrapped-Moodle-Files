@@ -1,0 +1,45 @@
+1.
+create or replace function defaultCommissionPCT ( m_id in number) return number is
+	x number;
+	apct number;
+begin
+	select avg(nvl(commission_pct,0)) into x from emp_temp where manager_id=m_id;
+	if m_id>=123 then
+		apct:=x*0.1;
+	elsif m_id>=110 then
+		apct:=x*0.12;
+	else 
+		apct:=0.1;
+	end if;
+	return apct;
+exception
+	when no_data_found then 
+		return -1;
+	when others then
+		return -1;
+end;
+-------------------------------------------------
+2.
+create or replace procedure changeAll is
+	pct number;
+begin
+	for r in (select employee_id eid, nvl(commission_pct,-1) x_pct , manager_id from emp_temp)
+	loop
+			if r.x_pct=-1 then
+				pct:=defaultCommissionPCT(r.manager_id);
+				update emp_temp
+				set commission_pct=pct
+				where employee_id=r.eid;
+				dbms_output.put_line('Changed for ' || r.eid);
+			else
+				dbms_output.put_line('Unchanged for ' || r.eid);
+			end if;
+	end loop;
+exception
+	when no_data_found then 
+		dbms_output.put_line('no_data_found');
+	when too_many_rows then
+		dbms_output.put_line('too_many_rows');
+	when others then
+		dbms_output.put_line('others');
+end;

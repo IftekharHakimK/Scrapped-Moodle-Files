@@ -1,0 +1,14 @@
+<h2>News forum</h2><a href="https://moodle.cse.buet.ac.bd/user/view.php?id=1878&course=651"></a>
+Some clarification on Group Presentation Tasks
+by <a href="https://moodle.cse.buet.ac.bd/user/view.php?id=1878&course=651">Syed Md. Mukit Rashid</a> - Saturday, 29 January 2022, 6:53 PM
+
+
+ 
+
+<b>Presentation 1:</b>You need to show the usages mentioned in this page (upto wifihelper inclusive):<a href="https://www.nsnam.org/docs/models/html/wifi-user.html">https://www.nsnam.org/docs/models/html/wifi-user.html</a>Discuss the helper classes mentioned and any concept of yanswifiphy and yanswifimac that is required for these usages.<b>Presentation 2:</b>Discuss ErrorModel, and their usage in the context of wifi <br />MobilityModel and a usage of them in wifiDiscuss The two example configurations of adhoc and infrastructure configurations here:<br /><a href="https://www.nsnam.org/docs/models/html/wifi-user.html">https://www.nsnam.org/docs/models/html/wifi-user.html</a><b>Presentation 3:</b>i. A wifi network topology would be preferable.ii. You dont necessarily need to calculate your throughput from the deafult trace files. You can generate log/tracefiles by connecting your defined functions to approporitate tracesources, then calculate the no. of bytes sent (this should be accurately calculated) and then caluating the throughput from that.iii. Showing usage of tracemetrics is optional. If anyone is willing to show he can and will get extra minutes and bonus marks to show.<b>Presentation 4:</b>similar rules to presentation 3 apply.<b>Presentation 5:</b>For TcpSocketBase, you need to show the functions related to core tcp tasks: Functionalities related to establishing/closing connections, sending/receiving data, adding and processing options to packet header and calculation of RTO and estimation of RTT. You can omit showing parts related to tcp congestion control.<b>Presentation 6:</b>For TcpSocketBase, you have to show only the parts related to congestion control. You will adopt your assigned congestion control algroithm as a case study, and walkthrough the integration of a congestion control algorithm in NS3.<b>Presentation 7:</b>You have to give an overview of how the whole routing is done (basic structure of routing-protocol, control packet, and routing-table; and walkthrough on how finally a next-hop is determined after a packet is Reiceved in the network layer). You can take a very simple routing protocol as an example (e.g. RIP/OSPF) to complete your demonstration of how routing is done. Don't delve too much into the mechanics of the routing protocol itself, just what is expected from a routing protocol in the context of routing. <b>Presentation 8:</b>You guys, in turn, will explain what a routing protocol does in detail. You will adopt your assigned routing protocol (aodv/dsr) as a case study and walkthrough how it works in ns3.<br />
+
+
+
+
+
+

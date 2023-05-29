@@ -1,0 +1,46 @@
+[Reference Sections from Rosen is given; but the slides may cover more area which may be read from the slides directly. The concepts covered in the slides are enough. Based on these concepts you should practice solving more problems from Rosen as well as from varous other sources.]
+
+L14-Counting-MSR2018-1.ppt
+5.1, 5.3, 5.4, 7.5 
+
+L05-Induction-I-MSR2018.ppt + L06-Induction-II-Sohel2018.ppt
+4.1, 4.2, 4.3
+
+W9-1-2018-MSR-FnAndPHP1.ppt
+2.3, 5.2
+
+W9-2-3-2018-MSRCountingByMap.ppt
+5.5
+
+W10-Seq.ppt
+2.4
+
+W11-GenFn.pptx
+7.4, 7.5
+
+W12-MSR-Recursion2018.ppt
+7.1, 7.2
+
+W13-Graphs.pptx
+No Reference Needed
+
+
+W14GraphColoring.ppt
+No reference Needed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

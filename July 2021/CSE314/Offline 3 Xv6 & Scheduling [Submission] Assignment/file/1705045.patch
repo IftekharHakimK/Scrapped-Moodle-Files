@@ -1,0 +1,519 @@
+diff --git a/Makefile b/Makefile
+index 09d790c..2bf51c8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -181,6 +181,9 @@ UPROGS=\
+ 	_usertests\
+ 	_wc\
+ 	_zombie\
++	_shutdown\
++	_getpinfo\
++	_checking\
+ 
+ fs.img: mkfs README $(UPROGS)
+ 	./mkfs fs.img README $(UPROGS)
+@@ -217,7 +220,7 @@ QEMUGDB = $(shell if $(QEMU) -help | grep -q '^-gdb'; \
+ 	then echo "-gdb tcp::$(GDBPORT)"; \
+ 	else echo "-s -p $(GDBPORT)"; fi)
+ ifndef CPUS
+-CPUS := 2
++CPUS := 1
+ endif
+ QEMUOPTS = -drive file=fs.img,index=1,media=disk,format=raw -drive file=xv6.img,index=0,media=disk,format=raw -smp $(CPUS) -m 512 $(QEMUEXTRA)
+ 
+@@ -249,7 +252,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
+ 
+ EXTRA=\
+ 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
+-	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
++	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c shutdown.c getpinfo.c checking.c\
+ 	printf.c umalloc.c\
+ 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
+ 	.gdbinit.tmpl gdbutil\
+diff --git a/checking.c b/checking.c
+new file mode 100644
+index 0000000..a345d23
+--- /dev/null
++++ b/checking.c
+@@ -0,0 +1,87 @@
++#include "types.h"
++#include "stat.h"
++#include "user.h"
++#include "pstat.h"
++long long limit=1000000000;
++
++int main(int argc, char * argv[])
++{
++	int nprocess=atoi(argv[1]);
++	
++	int allpids[NPROC];
++	
++	settickets(100);
++	
++	for(int i=0;i<nprocess;i++)
++	{
++		int pid=fork();
++		if(pid==0)
++		{
++			settickets(atoi(argv[i+2]));
++			//dummy code
++			long long xx;
++			while(1)
++			{
++				xx=xx*xx;
++			}
++		}
++		else if(pid>0)
++		{
++			allpids[i]=pid;
++			printf(1,"Created process with pid: %d tickets: %d\n",pid,atoi(argv[i+2]));
++		}
++		else if(pid==-1)
++		{
++			printf(1,"error\n");
++		}
++	}
++	
++	//dummy code
++	long long ee=0;
++	for(long long cc=1;cc<=limit;cc++)
++	{
++		ee+=cc*cc+cc;
++	}
++	
++	struct pstat x;
++	getpinfo(&x);
++	
++	
++	printf(1,"Counting start\n");
++	
++	//dummy code
++	long long dd=0;
++	for(long long cc=1;cc<=limit;cc++)
++	{
++		dd+=cc*cc;
++	}
++	
++	struct pstat y;
++	getpinfo(&y);
++	
++	printf(1,"Got:\n");
++	printf(1,"-----------------------------------------------\n");
++	for(int i=0;i<NPROC;i++)
++	{
++		if(y.inuse[i]==1)
++		{
++			printf(1,"%d %d %d %d %d\n",i,(y.inuse[i]),(y.tickets[i]),(y.pid[i]),(y.ticks[i])-(x.ticks[i]));
++			if(x.pid[i]!=y.pid[i])
++				printf(1,"Error!\n");
++		}
++	}
++	
++	for(int i=0;i<nprocess;i++)
++	{
++		kill(allpids[i]);
++	}
++	for(int i=0;i<nprocess;i++)
++	{
++		wait();
++	}
++	
++	
++	printf(1,"Dummy values: %d %d\n",dd,ee);
++	
++	exit();
++}
+\ No newline at end of file
+diff --git a/defs.h b/defs.h
+index 82fb982..27e8457 100644
+--- a/defs.h
++++ b/defs.h
+@@ -9,6 +9,7 @@ struct spinlock;
+ struct sleeplock;
+ struct stat;
+ struct superblock;
++struct pstat;
+ 
+ // bio.c
+ void            binit(void);
+@@ -185,6 +186,8 @@ void            switchuvm(struct proc*);
+ void            switchkvm(void);
+ int             copyout(pde_t*, uint, void*, uint);
+ void            clearpteu(pde_t *pgdir, char *uva);
++void 			assignpinfo(struct pstat *);
++void 			assigntickets(int tickets);
+ 
+ // number of elements in fixed-size array
+ #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
+diff --git a/getpinfo.c b/getpinfo.c
+new file mode 100644
+index 0000000..9c8699c
+--- /dev/null
++++ b/getpinfo.c
+@@ -0,0 +1,18 @@
++#include "types.h"
++#include "stat.h"
++#include "user.h"
++#include "pstat.h"
++
++int main(int argc, char * argv[])
++{
++    struct pstat x;
++	getpinfo(&x);
++	int i;
++	for(i=0;i<NPROC;i++)
++	{
++		printf(1,"%d %d %d %d %d\n",i,(x.inuse[i]),(x.tickets[i]),(x.pid[i]),(x.ticks[i]));
++	}
++	
++	
++    exit();//eq to return zero
++}
+\ No newline at end of file
+diff --git a/proc.c b/proc.c
+index 806b1b1..58040cb 100644
+--- a/proc.c
++++ b/proc.c
+@@ -6,6 +6,8 @@
+ #include "x86.h"
+ #include "proc.h"
+ #include "spinlock.h"
++#include "pstat.h"
++#include "date.h"
+ 
+ struct {
+   struct spinlock lock;
+@@ -20,6 +22,52 @@ extern void trapret(void);
+ 
+ static void wakeup1(void *chan);
+ 
++struct rtcdate r;
++int seed;
++
++int getrandom() //Linear congruential generator - glibc
++{
++	seed=(1LL*seed*1103515245+12345)%(1<<31);
++	return seed;
++}
++
++
++void assignpinfo(struct pstat * x)
++{
++	acquire(&ptable.lock);
++	
++	struct proc *p;
++	int i=0;
++	for(p = ptable.proc; p < &ptable.proc[NPROC]; p++,i++){
++		if(p->state==UNUSED)
++		{
++			x->inuse[i]=0;
++			x->tickets[i]=0;
++			x->pid[i]=0;
++			x->ticks[i]=0;
++		}
++		else 
++		{
++			x->inuse[i]=1;
++			x->tickets[i]=p->tickets;
++			x->pid[i]=p->pid;
++			x->ticks[i]=p->ticks;
++		}
++	}
++	
++	release(&ptable.lock);
++	return;
++}
++
++void assigntickets(int tickets)
++{
++	acquire(&ptable.lock);
++	//cprintf("Assigning %d %d\n",myproc()->pid, tickets);
++	myproc()->tickets=tickets;
++	release(&ptable.lock);
++	return;
++}
++
+ void
+ pinit(void)
+ {
+@@ -213,7 +261,7 @@ fork(void)
+   pid = np->pid;
+ 
+   acquire(&ptable.lock);
+-
++  np->tickets=curproc->tickets;
+   np->state = RUNNABLE;
+ 
+   release(&ptable.lock);
+@@ -322,33 +370,79 @@ wait(void)
+ void
+ scheduler(void)
+ {
++  cmostime(&r);
++  seed=r.second%(1<<31);
++  
++  
+   struct proc *p;
+   struct cpu *c = mycpu();
+   c->proc = 0;
+   
++  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
++  {
++		p->tickets=1;
++		p->ticks=0;
++  }
++  
++	
++  
+   for(;;){
+     // Enable interrupts on this processor.
+     sti();
+ 
+     // Loop over process table looking for process to run.
+     acquire(&ptable.lock);
+-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+-      if(p->state != RUNNABLE)
+-        continue;
+-
+-      // Switch to chosen process.  It is the process's job
+-      // to release ptable.lock and then reacquire it
+-      // before jumping back to us.
+-      c->proc = p;
+-      switchuvm(p);
+-      p->state = RUNNING;
+-
+-      swtch(&(c->scheduler), p->context);
+-      switchkvm();
+-
+-      // Process is done running for now.
+-      // It should have changed its p->state before coming back.
+-      c->proc = 0;
++	
++	int total=0;
++	for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
++	{
++		if(p->state==RUNNABLE)
++		{
++			total+=p->tickets;
++		}
++	}
++	
++	if(total==0)
++	{
++		release(&ptable.lock);
++		continue;
++	}
++	
++	int cur=getrandom();
++	cur=cur%total;
++	
++    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
++	{
++		if(p->state != RUNNABLE)
++			continue;
++		
++		
++		cur-=p->tickets;
++		if(cur>=0)
++			continue;
++	
++		// Switch to chosen process.  It is the process's job
++		// to release ptable.lock and then reacquire it
++		// before jumping back to us.
++		
++		c->proc = p;
++		switchuvm(p);
++		p->state = RUNNING;
++		
++		int started=ticks;
++		
++		swtch(&(c->scheduler), p->context);
++		
++		int ended=ticks;
++		
++		p->ticks+=ended-started;
++		
++		switchkvm();
++		
++		// Process is done running for now.
++		// It should have changed its p->state before coming back.
++		c->proc = 0;
++		break;
+     }
+     release(&ptable.lock);
+ 
+diff --git a/proc.h b/proc.h
+index 1647114..e3698a3 100644
+--- a/proc.h
++++ b/proc.h
+@@ -36,6 +36,8 @@ enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
+ 
+ // Per-process state
+ struct proc {
++  int tickets;
++  int ticks;
+   uint sz;                     // Size of process memory (bytes)
+   pde_t* pgdir;                // Page table
+   char *kstack;                // Bottom of kernel stack for this process
+@@ -55,4 +57,4 @@ struct proc {
+ //   text
+ //   original data and bss
+ //   fixed-size stack
+-//   expandable heap
++//   expandable heap
+\ No newline at end of file
+diff --git a/pstat.h b/pstat.h
+new file mode 100644
+index 0000000..d2cbe67
+--- /dev/null
++++ b/pstat.h
+@@ -0,0 +1,22 @@
++#ifndef _PSTAT_H_
++
++#define _PSTAT_H_
++
++
++#include "param.h"
++
++
++struct pstat {
++
++  int inuse[NPROC];   // whether this slot of the process table is in use (1 or 0)
++
++  int tickets[NPROC]; // the number of tickets this process has
++
++  int pid[NPROC];     // the PID of each process
++
++  int ticks[NPROC];   // the number of ticks each process has accumulated
++
++};
++
++
++#endif // _PSTAT_H_
+\ No newline at end of file
+diff --git a/shutdown.c b/shutdown.c
+new file mode 100644
+index 0000000..c15cfd5
+--- /dev/null
++++ b/shutdown.c
+@@ -0,0 +1,10 @@
++#include "types.h"
++#include "stat.h"
++#include "user.h"
++
++int main(int argc, char * argv[])
++{
++    printf(1, "Exiting\n");
++    shutdown();
++    exit();//eq to return zero
++}
+\ No newline at end of file
+diff --git a/syscall.c b/syscall.c
+index ee85261..d0fe105 100644
+--- a/syscall.c
++++ b/syscall.c
+@@ -103,6 +103,9 @@ extern int sys_unlink(void);
+ extern int sys_wait(void);
+ extern int sys_write(void);
+ extern int sys_uptime(void);
++extern int sys_shutdown(void);
++extern int sys_getpinfo(void);
++extern int sys_settickets(void);
+ 
+ static int (*syscalls[])(void) = {
+ [SYS_fork]    sys_fork,
+@@ -126,6 +129,9 @@ static int (*syscalls[])(void) = {
+ [SYS_link]    sys_link,
+ [SYS_mkdir]   sys_mkdir,
+ [SYS_close]   sys_close,
++[SYS_shutdown]   sys_shutdown,
++[SYS_getpinfo]   sys_getpinfo,
++[SYS_settickets]   sys_settickets,
+ };
+ 
+ void
+diff --git a/syscall.h b/syscall.h
+index bc5f356..8a842f3 100644
+--- a/syscall.h
++++ b/syscall.h
+@@ -20,3 +20,6 @@
+ #define SYS_link   19
+ #define SYS_mkdir  20
+ #define SYS_close  21
++#define SYS_shutdown  22
++#define SYS_getpinfo  23
++#define SYS_settickets  24
+diff --git a/sysproc.c b/sysproc.c
+index 0686d29..1354afe 100644
+--- a/sysproc.c
++++ b/sysproc.c
+@@ -6,6 +6,7 @@
+ #include "memlayout.h"
+ #include "mmu.h"
+ #include "proc.h"
++#include "pstat.h"
+ 
+ int
+ sys_fork(void)
+@@ -89,3 +90,30 @@ sys_uptime(void)
+   release(&tickslock);
+   return xticks;
+ }
++void sys_shutdown(void)
++{
++	outw(0xB004, 0x0|0x2000);
++	outw(0x604, 0x0|0x2000);
++}
++int sys_getpinfo(void)
++{
++	struct pstat * x;
++	
++	if(argptr(0,(void*)&x,sizeof(*x))<0)
++		return -1;
++	
++	assignpinfo(x);
++	
++	return 0;
++}
++int sys_settickets(void)
++{
++	int tickets;
++	
++	if(argint(0,&tickets)<0)
++		return -1;
++	if(tickets<1)
++		return -1;
++	assigntickets(tickets);
++	return 0;
++}
+\ No newline at end of file
+diff --git a/user.h b/user.h
+index 4f99c52..c504a05 100644
+--- a/user.h
++++ b/user.h
+@@ -1,5 +1,6 @@
+ struct stat;
+ struct rtcdate;
++struct pstat;
+ 
+ // system calls
+ int fork(void);
+@@ -37,3 +38,6 @@ void* memset(void*, int, uint);
+ void* malloc(uint);
+ void free(void*);
+ int atoi(const char*);
++void shutdown(void);
++int getpinfo(struct pstat *);
++int settickets(int tickets);
+\ No newline at end of file
+diff --git a/usys.S b/usys.S
+index 8bfd8a1..0b8631b 100644
+--- a/usys.S
++++ b/usys.S
+@@ -29,3 +29,6 @@ SYSCALL(getpid)
+ SYSCALL(sbrk)
+ SYSCALL(sleep)
+ SYSCALL(uptime)
++SYSCALL(shutdown)
++SYSCALL(getpinfo)
++SYSCALL(settickets)

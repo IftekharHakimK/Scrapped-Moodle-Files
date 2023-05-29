@@ -1,0 +1,32 @@
+1. Write a class Point with two coordinates.
+Encapsulate the coordinates properly.
+
+2. Write a class Line with two Point objects.
+
+members functions:
+
+-- calculate length of the line segment
+-- calculate the slope of the line
+-- isXAxis
+-- isYAxis
+
+
+3. Write a class Triangle with three points
+
+members functions:
+
+-- getArea
+-- isEquilateral
+-- isRightAngle
+-- isBilateral
+
+
+4. Write a class Quadrilateral with 4 points
+
+member functions:
+
+-- getArea
+-- isSquare
+-- isRectangle
+-- isRhombus
+-- isTrapeziod

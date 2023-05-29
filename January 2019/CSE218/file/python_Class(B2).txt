@@ -1,0 +1,312 @@
+2+3
+5
+>>> print('Hello World')
+Hello World
+>>> print("Hello World!!!")
+Hello World!!!
+>>> 
+============================ RESTART: D:/mtip.py ============================
+Hello CSE
+>>> 10/7
+1.4285714285714286
+>>> 10//7
+1
+>>> #bcbsdv
+>>> #This is a comment
+>>> #Now we will see exponential
+>>> 2**3
+8
+>>> 838**896
+1685158257132269555433052186496496024500965728482574651259134281268709330333314681063633500357063233512539202345582193599308413357413935609448647378531990211271424149548224002314409060898180472904543600929704442811557104598222669876762230335090283363725961958725132019431019631411298997416223700434791261474416540180904749820659005214359461776217261718778498631427404044407356423480227431287553530302390955330387906403746461271257202390860112814832025138360033636329314013298124181258036575588895239974643131724719250404281206177381429966590364571566203960371343531420557763400596030077682443460308936630953768318905206618846176476975716098923182367007649489021924581147596958361480014746298844648281258986752189284020694350575230074786362266513071943880675292595118728760074531831227323398917295047157882605441679453413398336741209265780188870226649713216625374237062757540217110006918459958299381027386951091386682597647873445333352287315040639937086141201681521006303253939613957940290457181759347674380174823635568604318082134867250366257003391904710846422363195337066050502323075970535748484172047246458422300563022113063132064411484798503288643343759592378296497032996622207866584402222959761048498453458812256907585380052390613410063883367629860085537879382948435262403305765113163472583799249091444019753910774007384021214110879740993171984634023276337339537456505614168670596103159350604007615576701934947683622160000984835431055754454516033814878462096669264077384927628415523163414878255180823870488474951368085090659448501643740594669707718435353564592098850724755565127044853462974175418524937073528884452154129095729017201113267120315525500957006673679748285774285705960537141773051165798606707734217785469964975597611456838962049334452743980306366456855879397439858406299119174355890184988452300489742659236348997323746621256939982606030900211147501479506999044149346576870054056125199200923556470209050750757441846120563093894825106877151418328511137680079311898878314137045996712484946541138556179278807694604754927005548824796528806011941414178467341392592507148890131446174794026241039009538321779988913313604885184844276533592517448675979598069032509437050593074498198272983307846599933011463514910373730787941835452284878927960555706711454544997517797708182373707302402898569838320063209751744581500101547851110461671167377422158743160646306153330581111812173986516318490632722645187385080142594222698221795892736089599776616054843991169959791460239157579275947123961262448711714070311245905055566889307882383095624903449263508832185446068697187950790693307584407830709172080387804664694195215138816
+>>> a=838**896
+>>> type(a)
+<class 'int'>
+>>> b='This is a string'
+>>> type(b)
+<class 'str'>
+>>> b='a'
+>>> b='121'
+>>> a=int(b)
+>>> a
+121
+>>> a=str(a)
+>>> type(a)
+<class 'str'>
+>>> import math
+>>> math.sine(10)
+Traceback (most recent call last):
+  File "<pyshell#21>", line 1, in <module>
+    math.sine(10)
+AttributeError: module 'math' has no attribute 'sine'
+>>> math.sin(10)
+-0.5440211108893698
+>>> dir(math)
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'pi', 'pow', 'radians', 'remainder', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']
+>>> help(math.tan)
+Help on built-in function tan in module math:
+
+tan(x, /)
+    Return the tangent of x (measured in radians).
+
+>>> help(math.factorial)
+Help on built-in function factorial in module math:
+
+factorial(x, /)
+    Find x!.
+    
+    Raise a ValueError if x is negative or non-integral.
+
+>>> a=5
+>>> n
+Traceback (most recent call last):
+  File "<pyshell#27>", line 1, in <module>
+    n
+NameError: name 'n' is not defined
+>>> a
+5
+>>> a+=2
+>>> a
+7
+>>> a++
+SyntaxError: invalid syntax
+>>> c=2+3j
+>>> type(c)
+<class 'complex'>
+>>> c.real
+2.0
+>>> dir(c)
+['__abs__', '__add__', '__bool__', '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__', '__eq__', '__float__', '__floordiv__', '__format__', '__ge__', '__getattribute__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__int__', '__le__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__new__', '__pos__', '__pow__', '__radd__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__rfloordiv__', '__rmod__', '__rmul__', '__rpow__', '__rsub__', '__rtruediv__', '__setattr__', '__sizeof__', '__str__', '__sub__', '__subclasshook__', '__truediv__', 'conjugate', 'imag', 'real']
+>>> c.conjugate
+<built-in method conjugate of complex object at 0x02116AE8>
+>>> c.conjugate()
+(2-3j)
+>>> a=5.5
+>>> round(a)
+6
+>>> ceil(a)
+Traceback (most recent call last):
+  File "<pyshell#40>", line 1, in <module>
+    ceil(a)
+NameError: name 'ceil' is not defined
+>>> ceiling(a)
+Traceback (most recent call last):
+  File "<pyshell#41>", line 1, in <module>
+    ceiling(a)
+NameError: name 'ceiling' is not defined
+>>> dir(math)
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'pi', 'pow', 'radians', 'remainder', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']
+>>> math.ceil(a)
+6
+>>> import math as m
+>>> m.tan(10)
+0.6483608274590866
+>>> m.sin(5)
+-0.9589242746631385
+>>> from math import sin
+>>> sin(10)
+-0.5440211108893698
+>>> cos(10)
+Traceback (most recent call last):
+  File "<pyshell#49>", line 1, in <module>
+    cos(10)
+NameError: name 'cos' is not defined
+>>> from math import cos
+>>> cos(10)
+-0.8390715290764524
+>>> from math import cos as c
+>>> c(10)
+-0.8390715290764524
+>>> str="This is a string. Ha ha aha"
+>>> str[0]
+'T'
+>>> str='hascvghasv'
+>>> str='''jsb sbvjbd'''
+>>> str="""jhdvbhjdshv"""
+>>> str="This is a string. Ha ha aha"
+>>> str[2]
+'i'
+>>> len(str)
+27
+>>> str="This is"
+>>> len(str)
+7
+>>> str.upper
+<built-in method upper of str object at 0x023E3500>
+>>> str.upper()
+'THIS IS'
+>>> a=str.upper()
+>>> a
+'THIS IS'
+>>> a.lower()
+'this is'
+>>> str='This is a test string. Test. Again'
+>>> str.split(' ')
+['This', 'is', 'a', 'test', 'string.', 'Test.', 'Again']
+>>> str1=str.split(' ')
+>>> str1[0]
+'This'
+>>> str="I am a boy. very good boy"
+>>> str.split('boy')
+['I am a ', '. very good ', '']
+>>> str1=str.split('boy')
+>>> str1[2]
+''
+>>> str1[3]
+Traceback (most recent call last):
+  File "<pyshell#78>", line 1, in <module>
+    str1[3]
+IndexError: list index out of range
+>>> str='This is a test string. Test. Again'
+>>> str.split(' ')
+['This', 'is', 'a', 'test', 'string.', 'Test.', 'Again']
+>>> str1=str.split(' ')
+>>> ' '.join(str1)
+'This is a test string. Test. Again'
+>>> str='I am a boy. very good boy'
+>>> 'girl'.join(str.split('boy'))
+'I am a girl. very good girl'
+>>> dir(str)
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+>>> help(str.replace)
+Help on built-in function replace:
+
+replace(old, new, count=-1, /) method of builtins.str instance
+    Return a copy with all occurrences of substring old replaced by new.
+    
+      count
+        Maximum number of occurrences to replace.
+        -1 (the default value) means replace all occurrences.
+    
+    If the optional argument count is given, only the first count occurrences are
+    replaced.
+
+>>> str.replace('boy','girl')
+'I am a girl. very good girl'
+>>> type(str[0])
+<class 'str'>
+>>> for i in range(len(str))
+SyntaxError: invalid syntax
+>>> for i in range(len(str)):
+	print(str[i])
+
+	
+I
+ 
+a
+m
+ 
+a
+ 
+b
+o
+y
+.
+ 
+v
+e
+r
+y
+ 
+g
+o
+o
+d
+ 
+b
+o
+y
+>>> str='string1'
+>>> str+'cvjhd'
+'string1cvjhd'
+>>> a=[1,1,23,4,5,8]
+>>> type(a)
+<class 'list'>
+>>> a.append('ajc')
+>>> a
+[1, 1, 23, 4, 5, 8, 'ajc']
+>>> a.len()
+Traceback (most recent call last):
+  File "<pyshell#99>", line 1, in <module>
+    a.len()
+AttributeError: 'list' object has no attribute 'len'
+>>> len(a)
+7
+>>> max(a)
+Traceback (most recent call last):
+  File "<pyshell#101>", line 1, in <module>
+    max(a)
+TypeError: '>' not supported between instances of 'str' and 'int'
+>>> a.remove('ajc')
+>>> max(a)
+23
+>>> b=[1,2,[5,1]]
+>>> dir(b)
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+>>> help(b.insert)
+Help on built-in function insert:
+
+insert(index, object, /) method of builtins.list instance
+    Insert object before index.
+
+>>> b.insert(1,'dskjv')
+>>> b
+[1, 'dskjv', 2, [5, 1]]
+>>> b[3]
+[5, 1]
+>>> b=[1,2,3,4,5,6,3,2,1,5]
+>>> len(b)
+10
+>>> b[-1]
+5
+>>> b[-2]
+1
+>>> b[-10]
+1
+>>> b[-11]
+Traceback (most recent call last):
+  File "<pyshell#115>", line 1, in <module>
+    b[-11]
+IndexError: list index out of range
+>>> b[2:5]
+[3, 4, 5]
+>>> b[:5]
+[1, 2, 3, 4, 5]
+>>> b[2:]
+[3, 4, 5, 6, 3, 2, 1, 5]
+>>> b[:]
+[1, 2, 3, 4, 5, 6, 3, 2, 1, 5]
+>>> b[:-1]
+[1, 2, 3, 4, 5, 6, 3, 2, 1]
+>>> b[-7:]
+[4, 5, 6, 3, 2, 1, 5]
+>>> t=(1,2,3,4)
+>>> len()
+Traceback (most recent call last):
+  File "<pyshell#123>", line 1, in <module>
+    len()
+TypeError: len() takes exactly one argument (0 given)
+>>> len(t)
+4
+>>> dir(t)
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'count', 'index']
+>>> x=3
+>>> y=2
+>>> (x,y)=(y,x)
+>>> x
+2
+>>> y
+3
+>>> dic={'CSE':120, 'EEE':195}
+>>> dic['CSE']
+120
+>>> dic['ME']=180
+>>> dic.keys()
+dict_keys(['CSE', 'EEE', 'ME'])
+>>> for key in dic.keys():
+	print(key,'has',dic[key],'seats')
+
+	
+CSE has 120 seats
+EEE has 195 seats
+ME has 180 seats
+>>> 

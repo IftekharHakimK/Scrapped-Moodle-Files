@@ -1,0 +1,8 @@
+
+Quiz guideline:
+
+There will be assignment-specific questions for which you should study related sections and topics from the textbook by Law. For example, for assignment-4, you should study [section 4.3 (chapter-4)] and [figure-9.2 and example 9.2 (chapter-9)]
+
+For taking preparation of assignment-specific questions, you should have a clear idea of the following: what was the main task of an assignment? What was its input and output? What quantities were estimated? Were any comparisons done? What was examined during lab evaluation and what questions were asked when you showed the assignment? Many students have not shown assignment-5a and 5b, but the quiz is on full syllabus. So, you should know what was examined for lab evaluation of the last assignment (for example, 37 percent rule for optimal stopping).
+
+There will also be questions from topics which were studied in CSE 411. For chapter-8, you should study the class notes of the last two weeks. For chapter-6, we have studied 6.1 and 6.2 (some of it). You should study the properties of probability distributions which were mentioned in the class. These properties are also useful for chapter-8. You should also know how to calculate mean value of a probability distribution, if parameters are specified. For example, what is the mean value of gamma (3, 2), or triang (1, 2, 1.5)? 

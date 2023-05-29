@@ -1,0 +1,36 @@
+<h2>Assignment 2 - Logistic Regression + Ensemble</h2><a href="https://docs.google.com/document/d/1ijtz7Hu4Cl0Fhj4WNI_Hws_KNXqgKP3M-8NC-jT8d_M/edit?usp=sharing">Specification</a>
+
+<h3>Submission status</h3><table>
+<tbody><tr>
+<td>Submission status</td>
+<td>Submitted for grading</td>
+</tr>
+<tr>
+<td>Grading status</td>
+<td>Not graded</td>
+</tr>
+<tr>
+<td>Due date</td>
+<td>Saturday, 17 December 2022, 12:00 AM</td>
+</tr>
+<tr>
+<td>Time remaining</td>
+<td>Assignment was submitted 5 hours 40 mins early</td>
+</tr>
+<tr>
+<td>Last modified</td>
+<td>Friday, 16 December 2022, 6:19 PM</td>
+</tr>
+<tr>
+<td>File submissions</td>
+<td><ul><li><img src="..%5C..%5C..%5CJanuary%202018%5CCSE102%5CiGraphics%20Offline%20Submission%20Link%20Assignment%5Cfile%5Carchive.png" /> <a href="file%5C1705045.zip">1705045.zip</a> 
+</li></ul>
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+

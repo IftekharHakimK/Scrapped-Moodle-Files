@@ -1,0 +1,27 @@
+Step 1:
+-------
+The given problem is NP. Because we can verify its solution in polynomial time.
+Given a solution of size at least K. We can test whether it is correct by checking if all of
+its vertices are distinct and adjacent, and size of the list at least K.
+It can be checked in O(number of vertices) time or in O(n) time.
+
+Step 2:
+-------
+Problem of hamiltonian path problem can be reduced to the given problem. Because solving 
+the hamiltonian path problem can be done by solving the given problem for K=n-1.
+
+Step 3:
+-------
+Reduction of hamiltonian path problem to the given problem is in polynomial time.
+Because solution to the given problem with K=n-1 can be easily reduced. This solution has n-1
+edges. This path is exactly a hamiltonian path. There is nothing to reduce anymore.
+
+Step 4:
+-------
+If the given problem has solution with K=n-1, there must be one hamiltonian path.
+If there is a hamiltonian path, the given problem will find has a solution with K=n-1.
+
+So, in short, if there is no hamiltonian path, the given problem will not have a solution with K=n-1.
+Similarly, if the given problem has no solution with K=n-1, there is no hamiltonian path.
+
+Hence, the given problem is NP-complete.

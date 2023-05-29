@@ -1,0 +1,452 @@
+Why we need PL/SQL
+===================================
+SQL - command like
+do not have variable , condition, loop, 
+
+consider a student table
+id  mark
+--- ------
+a      65     
+b      82
+
+if we store the grades as normal calculation
+b  A+
+a   B  
+
+but during pandemic, there is change in calculation, so we need to update
+based on marks, so we need "condition"
+b pass
+a pass
+
+if mark > 40 then pass
+
+so we need
+pl-sql
+
+
+advantage
+======================================
+1. variable, condition, loop, exception
+2. can be stored
+3.  specific privileges
+
+
+
+pl-sql
+=================================
+
+anonymous block === C main function
+procedure === C function, zero/more input parameter, output optional== C void function
+function === C function with return value, can be called from sql query
+trigger === procedure/function that are called automatically
+		Ex: when cart check out , ==> inventory update 
+		
+
+normal programming language structure
+-----------------------------------------------
+declare some var;  -- optional
+do something; 
+
+In PL/SQL:
+-----------------------
+Declare 
+	int a;
+	a integer;
+begin
+exception
+end
+		
+
+
+printing hello world
+=====================
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Hello');
+END;
+/
+
+variable
+=====================================
+
+how many months a employee has worked 
+
+DECLARE
+	JDATE DATE;
+	MONTHS NUMBER;
+	ENAME VARCHAR2(100);
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Hello');
+SELECT hire_date, LAST_NAME INTO JDATE,ENAME
+from EMPLOYEES WHERE EMPLOYEE_ID=100;
+MONTHS := MONTHS_BETWEEN("SYSDATE", JDATE);
+MONTHS := ROUND(MONTHS, 0);
+DBMS_OUTPUT.PUT_LINE('Employee ' || ENAME || ' worked for ' || MONTHS || ' months' );
+END;
+/
+
+condition
+========================================
+check if work for more than 20 years
+
+DECLARE
+	JDATE DATE;
+	YEARS NUMBER;
+	ENAME VARCHAR2(100);
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Hello');
+SELECT hire_date, LAST_NAME INTO JDATE,ENAME
+from EMPLOYEES WHERE EMPLOYEE_ID=100;
+YEARS := MONTHS_BETWEEN("SYSDATE", JDATE)/12;
+YEARS := ROUND(YEARS, 0);
+IF YEARS >=30 THEN
+	DBMS_OUTPUT.PUT_LINE('Employee works for more than 20 years');
+ELSE
+	DBMS_OUTPUT.PUT_LINE('Employee works for less than 20 years');
+end IF;
+--DBMS_OUTPUT.PUT_LINE('Employee ' || ENAME || ' worked for ' || MONTHS || ' months' );
+END;
+/
+
+Comments
+--------------------------
+--This is a single-line comment
+/*
+This is a multi-line
+Comment.
+*/
+
+Exception
+==============================================
+DECLARE
+	JDATE DATE;
+	YEARS NUMBER;
+	ENAME VARCHAR2(100);
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Hello');
+SELECT hire_date, LAST_NAME INTO JDATE,ENAME
+from EMPLOYEES WHERE EMPLOYEE_ID=10000;
+YEARS := MONTHS_BETWEEN("SYSDATE", JDATE)/12;
+YEARS := ROUND(YEARS, 0);
+IF YEARS >=30 THEN
+	DBMS_OUTPUT.PUT_LINE('Employee works for more than 20 years');
+ELSE
+	DBMS_OUTPUT.PUT_LINE('Employee works for less than 20 years');
+end IF;
+--DBMS_OUTPUT.PUT_LINE('Employee ' || ENAME || ' worked for ' || MONTHS || ' months' );
+EXCEPTION
+	WHEN no_data_found THEN
+		DBMS_OUTPUT.PUT_LINE('Employee not found');
+	WHEN others THEN
+		DBMS_OUTPUT.PUT_LINE('What happens !!!!');
+END;
+/
+
+
+loop
+====================================
+
+for:  for var in low..high
+while 
+
+
+BEGIN
+	for i in 1..10
+	loop
+		DBMS_OUTPUT.PUT_LINE(i);
+	END loop;
+END;
+/
+
+DECLARE
+	i NUMBER;
+BEGIN
+	i := 1;
+	
+	while i <=12
+	loop
+		DBMS_OUTPUT.PUT_LINE(i);
+		i := i + 1;
+	END loop;
+END;
+/
+
+
+CURSOR
+=============================================
+
+REPORT EACH EMPLoyee AND THEIR WORKING MONTH
+
+
+FOR  R in selected list:
+	do something
+	
+DECLARE
+	--JDATE DATE;
+	MONTHS NUMBER;
+	--ENAME VARCHAR2(100);
+BEGIN
+--DBMS_OUTPUT.PUT_LINE('Hello');
+for R in (SELECT hire_date, LAST_NAME  from EMPLOYEES)
+loop
+
+	MONTHS := MONTHS_BETWEEN("SYSDATE", R.HIRE_DATE);
+	MONTHS := ROUND(MONTHS, 0);
+	DBMS_OUTPUT.PUT_LINE('Employee ' || R.LAST_NAME || ' worked for ' || MONTHS || ' months' );
+end loop;
+END;
+/
+
+
+
+
+
+
+Procedure
+=========================
+
+name
+parameters in/out data type
+
+
+CREATE OR REPLACE PROCEDURE IS_SENIOR_EMPLOYEE(EID IN VARCHAR2) IS
+	JDATE DATE ;
+	YEARS NUMBER ;
+BEGIN
+	SELECT HIRE_DATE INTO JDATE
+	FROM EMPLOYEES
+	WHERE EMPLOYEE_ID = EID ;
+	YEARS := (MONTHS_BETWEEN(SYSDATE, JDATE) / 12) ;
+	IF YEARS >= 10 THEN
+		DBMS_OUTPUT.PUT_LINE('The employee worked 10 years or more') ;
+		ELSE
+		DBMS_OUTPUT.PUT_LINE('The employee worked less than 10 years') ;
+	END IF ;
+END ;
+/
+
+Call procedure from PL/SQL block
+
+DECLARE
+BEGIN
+	IS_SENIOR_EMPLOYEE(100) ;
+	IS_SENIOR_EMPLOYEE(105) ;
+END ;
+
+Output from procedure
+-----------------------------------------
+CREATE OR REPLACE PROCEDURE IS_SENIOR_EMPLOYEE(EID IN VARCHAR2, MSG OUT VARCHAR2)
+IS
+	JDATE DATE ;
+	YEARS NUMBER ;
+BEGIN
+	SELECT HIRE_DATE INTO JDATE
+	FROM EMPLOYEES
+	WHERE EMPLOYEE_ID = EID ;
+	YEARS := (MONTHS_BETWEEN(SYSDATE, JDATE) / 12) ;
+	IF YEARS >= 10 THEN
+		MSG := 'The employee worked 10 years or more' ;
+	ELSE
+		MSG := 'The employee worked less than 10 years' ;
+	END IF ;
+EXCEPTION
+	WHEN NO_DATA_FOUND THEN
+		MSG := 'No employee found.' ;
+	WHEN TOO_MANY_ROWS THEN
+		MSG := 'More than one employee found.' ;
+	WHEN OTHERS THEN
+		MSG := 'Some unknown error occurred.' ;
+	
+	
+use it in PL/SQL block
+-------------------------------------
+DECLARE
+MESSAGE VARCHAR2(100) ;
+BEGIN
+	IS_SENIOR_EMPLOYEE(10000, MESSAGE) ;
+	DBMS_OUTPUT.PUT_LINE(MESSAGE) ;
+	IS_SENIOR_EMPLOYEE(105, MESSAGE) ;
+	DBMS_OUTPUT.PUT_LINE(MESSAGE) ;
+END ;	
+
+
+
+function
+===========================================
+name
+parameters in data type
+return type
+
+
+CREATE OR REPLACE FUNCTION GET_SENIOR_EMPLOYEE(EID IN VARCHAR2)
+RETURN VARCHAR2 IS
+	JDATE DATE ;
+	YEARS NUMBER ;
+	MSG VARCHAR2(100) ;
+BEGIN
+	SELECT HIRE_DATE INTO JDATE
+	FROM EMPLOYEES
+	WHERE EMPLOYEE_ID = EID ;
+	YEARS := (MONTHS_BETWEEN(SYSDATE, JDATE) / 12) ;
+	IF YEARS >= 10 THEN
+		MSG := 'The employee worked 10 years or more' ;
+	ELSE
+		MSG := 'The employee worked less than 10 years' ;
+	END IF ;
+	RETURN MSG ; --return the message
+EXCEPTION
+--you must return value from this section also
+	WHEN NO_DATA_FOUND THEN
+		RETURN 'No employee found.' ;
+	WHEN TOO_MANY_ROWS THEN
+		RETURN 'More than one employee found.' ;
+	WHEN OTHERS THEN
+		RETURN 'Some unknown error occurred.' ;
+END ;
+/
+
+
+Use it in PL/SQL
+-------------------------------------
+DECLARE
+	MESSAGE VARCHAR2(100) ;
+BEGIN
+	MESSAGE := GET_SENIOR_EMPLOYEE(10000) ;
+	DBMS_OUTPUT.PUT_LINE(MESSAGE) ;
+	MESSAGE := GET_SENIOR_EMPLOYEE(105) ;
+	DBMS_OUTPUT.PUT_LINE(MESSAGE) ;
+	END ;
+/
+
+Use it in query
+------------------------------
+SELECT employee_id, GET_SENIOR_EMPLOYEE(employee_id)
+from employees
+
+
+
+Trigger
+=======================================
+
+automatically call when a change in database occurs
+
+structure
+-----------------------------
+trigger name 
+before/after insert/delete/update
+of column_name
+on table_name 
+for each row/statement wise
+
+row level triggers, if n rows are updated => n times call
+statement level => 1 time call only
+
+CREATE TABLE STUDENTS(
+STUDENT_NAME VARCHAR2(250),
+CGPA NUMBER
+) ;
+
+CREATE OR REPLACE TRIGGER HELLO_WORLD
+AFTER INSERT
+ON STUDENTS
+DECLARE
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Hello World');
+END ;
+/
+
+
+
+
+INSERT INTO STUDENTS VALUES ('Fahim Hasan', 3.71);
+INSERT INTO STUDENTS VALUES ('Ahmed Nahiyan', 3.80);
+
+
+Study on this from booklets
+------------------------------------------
+BEFORE trigger vs. AFTER trigger 
+ROW LEVEL trigger vs. STATEMENT LEVEL trigger
+References :OLD vs. :NEW for a ROW LEVEL trigger
+
+
+
+if manager is removed, assign a new emp as manager with highest salary;
+
+steps
+-----------------------
+1. check if he is manager
+2. search his dept
+3. find emp with highest salary in this dept
+4. make the emp as new manager
+
+
+Now, write the trigger
+
+create trigger newMan 
+after delete 
+ON Employees
+for each row
+DECLARE
+	cnt NUMBER;
+	newmanagerid NUMBER;
+	dept_id NUMBER;
+BEGIN
+	select count(*) into cnt from DEPARTMENTS where managerid = old.EMPLOYEE_ID;
+	IF cnt >=1 Then --A manager is fired 
+		select DEPARTMENT_ID into dept_id from DEPARTMENTS where managerid = old.EMPLOYEE_ID; 
+		select EMPLOYEE_ID into newmanagerid  from EMPLOYEES where DEPARTMENT_ID= dept_id and rownum<=1
+		order by salary desc; 
+		update DEPARTMENTS set MANAGER_ID = newmanagerid where DEPARTMENT_ID=dept_id;  
+	ELSE
+		DBMS_OUTPUT.PUT_LINE('Not a manager');
+	END IF;
+END;
+/
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

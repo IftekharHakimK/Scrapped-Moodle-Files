@@ -1,0 +1,23 @@
+Reference Book : 
+1. Computer Security : A Hands on Approach by Wenliang Du (Syracuse University) [SeedBook]
+2. Introduction to Computer Security : Michael Goodrich & Roberto Tamassia [Goodrich]
+3. Computer Security and the Internet: Tools and Jewels by Paul C. van Oorschot [Jewels]
+Syllabus (Part 2):
+
+1. Web Security : [GoodRich] chapter 7 (exclude Section 2.4 and 2.5)
+[SeedBook] Chapter 9-11 [CSRF, XSS, SQLi](Exclude Section 11.1, also read Section 11.4 upto system(), exclude the rest of the Section.)
+*Also read the links given in the web security slide.
+
+2. Cryptography : [Jewels] chapter 2 (Section 2.1 - 2.6, for section 2.5 read only upto properties of cryptographic hash functions)
+[Goodrich] chapter 8 (exclude section 1.4, 1.7 also for section 5 proof of math theorems are out of syllabus)
+Links:
+-Substitution - Permutation Network : https://en.wikipedia.org/wiki/Substitution%E2%80%93permutation_network
+-Shannon's properties of confusion and diffusion : https://en.wikipedia.org/wiki/Confusion_and_diffusion
+-DES - https://en.wikipedia.org/wiki/Confusion_and_diffusion (Only read section 2)
+-AES - https://en.wikipedia.org/wiki/Advanced_Encryption_Standard (Read upto section 2)
+
+3. Software Security - 
+[Goodrich] Chapter 4.1 - 4.3
+[SeedBook] Chapter 4 (Buffer Overflow Attack)[Note: For Countermeasures, Read only the StackGuard Section in Detail. Skim through the rest of the countermeasures to gather an idea about them.]
+5 (Return to libc attack) [Exclude Return Oriented Programming]
+7 (Race Conditions)

@@ -1,0 +1,32 @@
+Making Wumpus a two player game:
+
+Declare another player object in Wumpus. So there are two players, player1 and player2. Both are objects of same class. So they can both move freely using the same functions. Now, you have to implement various checks. Like previously, you only checked if the player is in the same cell as the Wumpus. If so, the player would be dead. Now, you have to check if the first player is in the same cell with the Wumpus. If so, kill the first player. If the second player is in the same cell as the Wumpus, you have to kill the second player now.
+
+Like this 'killed by Wumpus' case, you have to implement other checks as well, such as if any of the player dies, gets breeze/stench or wins the game.
+
+Finally, you just take moves as input and alternatively let the players move. And you got a two-player WumpusWorld!
+
+
+Common non-OOP thinkings:
+
+-> Writing a class for Player1 and another class for Player2
+----> We do not have to do that. Both players are exactly the same with the same set of functionalities.
+
+-> Changing the Wumpus class
+----> The functionality of the Wumpus did not change, right? So you should not have to change the Wumpus class.
+
+
+
+
+Making the Wumpus move:
+
+This is easier. Previously, you had no way to move the Wumpus, because it did not have to move. Now that it does, you just implement some functions to make the Wumpus move. And that's it! Now you move your player once, and then the Wumpus. And you do this alternatively.
+
+
+Common non-OOP thinkings:
+
+-> Using the player class object as Wumpus (since Wumpus does not move, but player does)
+---> A Wumpus is a Wumpus, a player is a player. They are conceptually different entities. We should never do such thing. Instead, we add the necessary functions to make the Wumpus move.
+
+-> Having a player object within the Wumpus class (again, to make the Wumpus non-stationary).
+---> Again, a game board will have a Wumpus and a player with some pits and gold on the board. A wumpus will never have a player, in actual gaming scenario. We follow the same rules and concepts here as well.
